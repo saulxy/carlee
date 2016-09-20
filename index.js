@@ -1,9 +1,10 @@
 const http = require('http')
 const Bot = require('messenger-bot')
 
-var bot = new Bot({
+let bot = new Bot({
   token: 'EAAJHqDbHHmoBAF00oJHPhOb9XxZBOCiuUa4NsIZAfi62mPCHep1k82LIQyZChIKdKFuasVrtNga896ZBwjciasFOuJqPUpdsvuoZBK6DccqU2lRs7LeZCZC0z8IXEpT4kf5CHtjS3fRIUWrDVk31gA829LiMg8QsyNzJm9efwTWJQZDZD',
-  verify: 'WEEABO_TEST'
+  verify: 'WEEABO_TEST',
+  app_secret: '53e08e305f84bf58c3db296dea885aa2'
 })
 
 bot.on('error', (err) => {
@@ -11,7 +12,7 @@ bot.on('error', (err) => {
 })
 
 bot.on('message', (payload, reply) => {
-  var text = payload.message.text + "!"
+  var text = "Tu mensaje fue:" + payload.message.text
 
   bot.getProfile(payload.sender.id, (err, profile) => {
     if (err) throw err
@@ -19,7 +20,7 @@ bot.on('message', (payload, reply) => {
     reply({ text }, (err) => {
       if (err) throw err
 
-      console.log(`Echoed back to ${profile.first_name}               ${profile.last_name}: ${text}`)
+      console.log(`Echoed back to ${profile.first_name} ${profile.last_name}: ${text}`)
     })
   })
 })
