@@ -1,10 +1,12 @@
-const http = require('http')
-const Bot = require('messenger-bot')
+const
+http = require('http'),
+Bot = require('messenger-bot'),
+config = require('config')
 
 let bot = new Bot({
-  token: 'EAAJHqDbHHmoBAF00oJHPhOb9XxZBOCiuUa4NsIZAfi62mPCHep1k82LIQyZChIKdKFuasVrtNga896ZBwjciasFOuJqPUpdsvuoZBK6DccqU2lRs7LeZCZC0z8IXEpT4kf5CHtjS3fRIUWrDVk31gA829LiMg8QsyNzJm9efwTWJQZDZD',
-  verify: 'WEEABO_TEST',
-  app_secret: '53e08e305f84bf58c3db296dea885aa2'
+  token: config.get('pageAccessToken'),
+  verify: config.get('validationToken'),
+  app_secret: config.get('appSecret')
 })
 
 bot.on('error', (err) => {
