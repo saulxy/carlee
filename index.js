@@ -1,7 +1,8 @@
 const
 http = require('http'),
 Bot = require('messenger-bot'),
-config = require('config')
+config = require('config'),
+response = require('./basic_response.js')
 
 let bot = new Bot({
   token: config.get('pageAccessToken'),
@@ -14,7 +15,7 @@ bot.on('error', (err) => {
 })
 
 bot.on('message', (payload, reply) => {
-  var text = "Tu mensaje fue:" + payload.message.text
+  var text = response.isHi(payload.message.text)
 
   bot.getProfile(payload.sender.id, (err, profile) => {
     if (err) throw err
@@ -30,4 +31,4 @@ bot.on('message', (payload, reply) => {
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 http.createServer(bot.middleware()).listen(server_port, server_ip_address)
-console.log(`Echo bot server running at port ${server_port}.`)
+console.log(`Carlee running at port ${server_port}.`)
