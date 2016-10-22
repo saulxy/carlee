@@ -1,6 +1,6 @@
 {
   "name": "carlee",
-  "version": "0.1",
+  "version": "1.0",
   "description": "Shopping list bot",
   "private": true,
   "main": "index.js",
@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "config": "^1.21.0",
-    "messenger-bot": "^2.3.0"
+    "messenger-bot": "^2.3.0",
+    "node-wit": "^4.1.0"
   }
 }
