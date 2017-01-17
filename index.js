@@ -2,7 +2,12 @@ const
 http = require('http'),
 Bot = require('messenger-bot'),
 config = require('config'),
-response = require('./basic_response.js')
+response = require('./basic_response.js'),
+low = require('lowdb'),
+uuid = require('uuid')
+
+const db = low('db.json')
+db.defaults({ item: []}).value()
 
 let Wit = null
 let log = null
@@ -59,10 +64,9 @@ const actions = {
       return Promise.resolve()
     }
   },
-  addElement({context, entities}) {
+  addElement({context, entities,sessionId}) {
     return new Promise(function(resolve, reject) {
-      console.log("Inserting record in DB ...")
-      //TODO: Logic to save the item in DB
+      db.get('item').push({ id: uuid(), name: entities.item[0].value,user: sessions[sessionId].fbid}).value();
       return resolve(context);
     });
   },
@@ -117,7 +121,7 @@ bot.on('message', (payload, reply) => {
         text, // the user's message
         sessions[sessionId].context // the user's current session state
       ).then((context) => {
-        console.log('Waiting for next user messages');
+        console.log(`Waiting for next message from [${payload.sender.id}]`);
         sessions[sessionId].context = context;
       })
       .catch((err) => {
